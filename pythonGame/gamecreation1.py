@@ -29,7 +29,7 @@ def game():
     player_width = 50
     player_height = 50
     player_alive = True
-
+    not_been_played = True
 
     obstacle_width = 50
     obstacle_height = 50
@@ -50,6 +50,11 @@ def game():
     tree_image = pygame.image.load("tree.png")
     num = random.randint(100,400)
     grass = pygame.image.load("grass.png")
+    #sound and music
+    background_music = pygame.mixer.music.load('song_background.mp3')
+    pygame.mixer.music.play(-1)
+    sound_effects_death_sound = pygame.mixer.Sound('rock_sound.mp3')
+    enemy_die = pygame.mixer.Sound('test_ground_hit.mp3')
     # Main game loop
     running = True
     clock = pygame.time.Clock()
@@ -93,19 +98,27 @@ def game():
         
         # Update obstacle position and speed based on score
         obstacle_y += obstacle_speed
+        
+        if obstacle_y >450 and not_been_played ==True :
+            pygame.mixer.Sound.play(enemy_die)
+            not_been_played = False
         if obstacle_y > 505 and player_alive == True:
+            
             obstacle_y = 0
             obstacle_x = random.randint(0, 750)
             score += 1
             obstacle_speed = 10 + score // 2  # Increase speed every 5 points
+            not_been_played = True
         
         # Check collision
         if player_x < obstacle_x + obstacle_width and player_x + player_width > obstacle_x and player_y < obstacle_y + obstacle_height and player_y + player_height > obstacle_y:
+            pygame.mixer.Sound.play(sound_effects_death_sound)
             obstacle_y = 0
             obstacle_x = random.randint(0, 750)
             obstacle_speed = 0
             player_alive = False
         if player_alive == False:
+            pygame.mixer.music.stop()
         # Check for new high score
             
             if score >highscore:
