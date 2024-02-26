@@ -30,7 +30,8 @@ def game():
     player_height = 50
     player_alive = True
     not_been_played = True
-
+    grass_has_been_drawn = random.randint(2,6)
+    
     obstacle_width = 50
     obstacle_height = 50
     obstacle_x = random.randint(0, 750)
@@ -58,6 +59,8 @@ def game():
     # Main game loop
     running = True
     clock = pygame.time.Clock()
+    
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -74,14 +77,19 @@ def game():
         # Draw background trees and clouds and grass
         for i in range(0, 800, num):
             screen.blit(tree_image, (i, 500))
-        for i in range(0,800,4):
-            screen.blit(grass,(i,539))
+        
         if cloud_random_number == 0:    
             screen.blit(cloud,(0,-150))
         elif cloud_random_number == 1:    
             screen.blit(cloud,(50,-80))
         elif cloud_random_number == 2:    
             screen.blit(cloud,(-150,-150))
+        
+        for i in range(0,800,grass_has_been_drawn):
+            screen.blit(grass,(i,539))
+            
+            
+        
         # Draw grass
         pygame.draw.rect(screen, GREEN, (0, 550, 800, 10))
         
