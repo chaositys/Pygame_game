@@ -159,7 +159,7 @@ class Game:
         obstacle_height = 50
         obstacle_x = random.randint(0, 750)
         obstacle_y = 0
-        obstacle_speed = 28
+        obstacle_speed = 20
 
         score = 0
 
@@ -196,9 +196,9 @@ class Game:
             
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
-                player_x -= 30
+                player_x -= 22
             if keys[pygame.K_RIGHT] and player_x < 750:
-                player_x += 30
+                player_x += 22
             
             screen.fill(WHITE)
             pygame.draw.circle(screen,YELLOW,(10,10),80)
