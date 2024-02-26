@@ -15,7 +15,8 @@ class Game:
         
         return button_rect
 
-    def starting_game(self):
+    def starting_game(self,colour):
+       
         pygame.init()
         screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Dodge the Obstacles")
@@ -25,22 +26,80 @@ class Game:
         running = True
         clock = pygame.time.Clock()
         
+        
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.draw_button(screen, 350, 400, 100, 50, "click").collidepoint(event.pos):
-                        self.game()
+                    if self.draw_button(screen, 350, 400, 100, 50, "Play").collidepoint(event.pos):
+                        self.game(colour)
+                    if self.draw_button(screen,350,460,150,50,"Costomise").collidepoint(event.pos):
+                        colour = self.costomise()
             
             screen.fill(WHITE)
             text = font.render("Welcome to Dodge the Obstacles ", True, BLACK)
             screen.blit(text, (210, 240))
-            self.draw_button(screen, 350, 400, 100, 50, "click")
+            self.draw_button(screen, 350, 400, 100, 50, "Play")
+            self.draw_button(screen,325,460,150,50,"Costomise")
             
             pygame.display.update()
+    def costomise(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        clock = pygame.time.Clock()
+        colour = "Black"
+        
+        while running:
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen, 50, 400, 100, 50, "Red").collidepoint(event.pos):
+                        colour = "Red"
+                    if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos):
+                        colour = "Blue"
+                    if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos):
+                        colour = "Green"
+                    if self.draw_button(screen, 410,400,100,50, "Black").collidepoint(event.pos):
+                        colour = "Black"
+                    if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos):
+                        colour = "Pink"
+                    if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
+                        colour = "Yellow"
+                    if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos):
+                        colour = "Orange"
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        return colour
+                    
+                        
+            
+            screen.fill(WHITE)
+            text = font.render("Welcome to the cosmetics store", True, BLACK)
+            text2 = font.render("Pick your colour",True,BLACK)
+            screen.blit(text, (210, 240))
+            screen.blit(text2,(310,300))
+            self.draw_button(screen, 50, 400, 100, 50, "Red")
+            self.draw_button(screen,170,400,100,50,"Blue")
+            self.draw_button(screen, 290, 400, 100, 50, "Green")
+            self.draw_button(screen,410,400,100,50,"Black")
+            self.draw_button(screen, 530, 400, 100, 50, "Pink")
+            self.draw_button(screen,650,400,100,50,"Yellow")
+            self.draw_button(screen, 350, 470, 100, 50, "Orange")
+            
+            
+            self.draw_button(screen,700,15,90,50,"Return")
+            
+            pygame.display.update()
+            
 
-    def game(self):
+    def game(self,colour):
         # Initialize Pygame
         pygame.init()
         GameDataFile = open("gamedata.txt","r")
@@ -52,17 +111,42 @@ class Game:
         pygame.display.set_caption("Dodge the Obstacles")
 
         # Set up colors
+        past_self = ""
         WHITE = (255, 255, 255)
         BLACK = (0, 0, 0)
         RED = (255, 0, 0)
         BROWN = (139, 69, 19)
         GREEN = (0, 128, 0)
-        GRAY = (220,220,220)
-
+        PINK = (232,37,212)
+        ORANGE = (255,165,0)
+        YELLOW = (255,255,0)
+        BLUE = (8,221,253)
+        if colour == "Red":
+            past_self = colour
+            colour = RED
+        elif colour == "Blue":
+            past_self = colour
+            colour = BLUE
+        elif colour == "Green":
+            past_self = colour
+            colour = GREEN
+        elif colour == "Pink":
+            past_self = colour
+            colour = PINK
+        elif colour == "Yellow":
+            past_self = colour
+            colour = YELLOW
+        elif colour == "Orange":
+            past_self = colour
+            colour = ORANGE
+        else:
+            past_self = colour
+            colour = BLACK
         # Set up fonts
         font = pygame.font.Font(None, 36)
 
         # Set up game variables
+        
         player_x = 400
         player_y = 500
         player_width = 50
@@ -104,6 +188,11 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN and player_alive == False:
+                    if self.draw_button(screen, 350, 400, 100, 50, "Return").collidepoint(event.pos):
+                        
+                        self.starting_game(past_self)
+                        
             
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
@@ -112,7 +201,7 @@ class Game:
                 player_x += 30
             
             screen.fill(WHITE)
-            pygame.draw.circle(screen,(255,255,0),(10,10),80)
+            pygame.draw.circle(screen,YELLOW,(10,10),80)
             # Draw background trees and clouds and grass
             for i in range(0, 800, num):
                 screen.blit(tree_image, (i, 500))
@@ -138,7 +227,7 @@ class Game:
             
             # Draw player
             if player_alive == True:
-                pygame.draw.rect(screen, BLACK, (player_x, player_y, player_width, player_height))
+                pygame.draw.rect(screen, colour, (player_x, player_y, player_width, player_height))
             
             # Draw obstacle
                 pygame.draw.rect(screen, RED, (obstacle_x, obstacle_y, obstacle_width, obstacle_height))
@@ -184,6 +273,9 @@ class Game:
                 end_surface = font.render(f"You Died! Your score was {score}", True, BLACK)
                 screen.blit(end_surface, (240, 240))
                 
+                self.draw_button(screen, 350, 400, 100, 50, "Return")
+                
+                
                 
                     
                 
@@ -207,9 +299,10 @@ class Game:
         print(highscore)
                 
 if __name__ == '__main__':
+    colour = "black"
     game_instance = Game()
     try:
-        game_instance.starting_game()
+        game_instance.starting_game(colour)
     except pygame.error:
         print("error that i don't know how to fix.\n help if you can")
         
