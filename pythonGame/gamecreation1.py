@@ -191,8 +191,14 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN and player_alive == False:
                     if self.draw_button(screen, 350, 400, 100, 50, "Return").collidepoint(event.pos):
                         
-                        self.starting_game(past_self)
                         
+                        if score > highscore:
+                            GameDataFile = open("gamedata.txt", "w")
+                            highscore = score
+                            GameDataFile.write(str(highscore))
+                            GameDataFile.close()
+                        self.starting_game(past_self)
+                                        
             
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
