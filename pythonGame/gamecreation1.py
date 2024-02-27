@@ -16,6 +16,7 @@ class Game:
         return button_rect
 
     def starting_game(self,colour):
+        
        
         pygame.init()
         screen = pygame.display.set_mode((800, 600))
@@ -25,7 +26,7 @@ class Game:
         BLACK = (0, 0, 0)
         running = True
         clock = pygame.time.Clock()
-        
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
         
         while running:
             for event in pygame.event.get():
@@ -34,8 +35,10 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.draw_button(screen, 350, 400, 100, 50, "Play").collidepoint(event.pos):
                         self.game(colour)
+                        pygame.mixer.Sound.play(colour_click)
                     if self.draw_button(screen,350,460,150,50,"Costomise").collidepoint(event.pos):
                         colour = self.costomise()
+                        pygame.mixer.Sound.play(colour_click)
             
             screen.fill(WHITE)
             text = font.render("Welcome to Dodge the Obstacles ", True, BLACK)
@@ -54,6 +57,7 @@ class Game:
         running = True
         clock = pygame.time.Clock()
         colour = "Black"
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
         
         while running:
             
@@ -62,20 +66,28 @@ class Game:
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.draw_button(screen, 50, 400, 100, 50, "Red").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Red"
                     if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Blue"
                     if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Green"
                     if self.draw_button(screen, 410,400,100,50, "Black").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Black"
                     if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Pink"
                     if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Yellow"
                     if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         colour = "Orange"
                     if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
                         return colour
                     
                         
@@ -175,10 +187,13 @@ class Game:
         num = random.randint(100,400)
         grass = pygame.image.load("grass.png")
         #sound and music
+        
         background_music = pygame.mixer.music.load('song_background.mp3')
         pygame.mixer.music.play(-1)
         sound_effects_death_sound = pygame.mixer.Sound('rock_sound.mp3')
         enemy_die = pygame.mixer.Sound('test_ground_hit.mp3')
+        
+        
         # Main game loop
         running = True
         clock = pygame.time.Clock()
@@ -202,9 +217,9 @@ class Game:
             
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
-                player_x -= 22
+                player_x -= 17
             if keys[pygame.K_RIGHT] and player_x < 750:
-                player_x += 22
+                player_x += 17
             
             screen.fill(WHITE)
             pygame.draw.circle(screen,YELLOW,(10,10),80)
@@ -249,7 +264,7 @@ class Game:
                 obstacle_y = 0
                 obstacle_x = random.randint(0, 750)
                 score += 1
-                obstacle_speed = 28 + score // 2  # Increase speed every 5 points
+                obstacle_speed = 20 + score // 2  # Increase speed every 5 points
                 not_been_played = True
             
             # Check collision
