@@ -1,6 +1,9 @@
 import pygame
 from pygame.locals import *
 import random
+import base64
+import base64encode_decode
+
 
 class Game:
     @staticmethod
@@ -115,8 +118,24 @@ class Game:
         # Initialize Pygame
         pygame.init()
         GameDataFile = open("gamedata.txt","r")
-        highscore = int(GameDataFile.read())
+        temp = str(GameDataFile.read())
+        temp = base64encode_decode.decode(temp)
+        
+        highscore = temp
+        int(highscore)
         GameDataFile.close()
+        
+        coin_file = open("coinscore.txt","r")
+        temp = str(coin_file.read())
+        ttemp = base64encode_decode.decode(temp)
+        
+       
+        coin_score = ttemp
+      
+        int(coin_score)
+        
+        GameDataFile.close()
+        
 
         # Set up display
         screen = pygame.display.set_mode((800, 600))
@@ -167,12 +186,21 @@ class Game:
         not_been_played = True
         grass_has_been_drawn = random.randint(2,6)
         
+        
         obstacle_width = 50
         obstacle_height = 50
         obstacle_x = random.randint(0, 750)
         obstacle_y = 0
         obstacle_speed = 20
-
+        
+        coin_number = 0
+        coin_y = 510
+        coin_x = 300
+        placed = False
+        coin_width = 36
+        coin_radius = coin_width/2
+        
+        
         score = 0
 
         cloud_random_number = random.randint(0,2)
@@ -186,6 +214,8 @@ class Game:
         tree_image = pygame.image.load("tree.png")
         num = random.randint(100,400)
         grass = pygame.image.load("grass.png")
+        #load coin image
+        coin = pygame.image.load("coin.png")
         #sound and music
         
         background_music = pygame.mixer.music.load('song_background.mp3')
@@ -207,11 +237,19 @@ class Game:
                     if self.draw_button(screen, 350, 400, 100, 50, "Return").collidepoint(event.pos):
                         
                         
-                        if score > highscore:
+                        if score > int(highscore):
                             GameDataFile = open("gamedata.txt", "w")
+                            
                             highscore = score
-                            GameDataFile.write(str(highscore))
+                            
+                            hold = base64encode_decode.encode(highscore)
+                            
+                            GameDataFile.write(hold)
                             GameDataFile.close()
+                        coin_file = open("coinscore.txt","w")
+                        hold = base64encode_decode.encode(coin_score)
+                        coin_file.write(hold)
+                        coin_file.close()
                         self.starting_game(past_self)
                                         
             
@@ -266,7 +304,23 @@ class Game:
                 score += 1
                 obstacle_speed = 20 + score // 2  # Increase speed every 5 points
                 not_been_played = True
-            
+            if placed == False:
+                coin_number = random.randint(1,250)
+                if coin_number == 225:
+                    coin_x = random.randint(50,700)
+                    
+                    
+                    placed = True
+            if placed  == True:
+                
+                screen.blit(coin,(coin_x,coin_y))
+                if player_x < coin_x+ coin_radius and player_x +player_width> coin_x and player_alive == True:
+                    placed = False
+                    
+                    
+                    coin_score += 1
+                    
+                    
             # Check collision
             if player_x < obstacle_x + obstacle_width and player_x + player_width > obstacle_x and player_y < obstacle_y + obstacle_height and player_y + player_height > obstacle_y:
                 pygame.mixer.Sound.play(sound_effects_death_sound)
@@ -278,15 +332,15 @@ class Game:
                 pygame.mixer.music.stop()
             # Check for new high score
                 
-                if score >highscore:
+                if score >int(highscore):
                     end_surface3 = font.render("You have a new highscore! Congratulations!!!", True, BLACK)
                     screen.blit(end_surface3, (140, 290))
+                
                     
-                    
-                elif score < highscore:
+                elif score < int(highscore):
                     end_surface2 = font.render(f"Try to beat your highscore of {highscore}", True, BLACK)
                     screen.blit(end_surface2, (230, 290))
-                elif score == highscore:
+                elif score == int(highscore):
                     end_surface2 = font.render(f"You tied the highscore of {highscore}. Don't Give Up!!!", True, BLACK)
                     screen.blit(end_surface2, (140, 290))
                 
@@ -308,16 +362,14 @@ class Game:
             screen.blit(score_surface, (10, 10))
             
             pygame.display.flip()
+
             clock.tick(30)
         
         pygame.quit()
-        print(highscore)
-        if score > highscore:
-            GameDataFile = open("gamedata.txt", "w")
-            highscore = score
-            GameDataFile.write(str(highscore))
-            GameDataFile.close()
-        print(highscore)
+        
+        
+        
+        
                 
 if __name__ == '__main__':
     colour = "black"
@@ -326,6 +378,3 @@ if __name__ == '__main__':
         game_instance.starting_game(colour)
     except pygame.error:
         print("error that i don't know how to fix.\n help if you can")
-        
-
-
