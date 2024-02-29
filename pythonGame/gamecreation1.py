@@ -51,7 +51,17 @@ class Game:
             
             pygame.display.update()
     def costomise(self):
+        coin_file = open("coinscore.txt","r")
+        temp = str(coin_file.read())
+        ttemp = base64encode_decode.decode(temp)
+        
+        
+        
+        coin_score = ttemp
+
+        int(coin_score)
         pygame.init()
+        
         screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Dodge the Obstacles")
         font = pygame.font.Font(None, 36)
@@ -61,58 +71,118 @@ class Game:
         clock = pygame.time.Clock()
         colour = "Black"
         colour_click = pygame.mixer.Sound("colour_click.mp3")
-        
+        cost11 = 0
+        cost22 = 5
+        cost33 = 10
+        cost44 = 25
+        cost55 = 50
+        cost66 = 100
+        cost77 = 1000
+        colour_index = 0
         while running:
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.draw_button(screen, 50, 400, 100, 50, "Red").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Red"
-                    if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos):
+                    if self.draw_button(screen, 50, 400, 100, 50, "Black").collidepoint(event.pos) and coin_score >= 0:
+                        
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Black"
+                            coin_score -= cost11
+                            self.update_color_ownership(colour_index,2)
+                       
+                            
+                    if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos) and coin_score >= 5:
+                        
+                        
+                            
                         pygame.mixer.Sound.play(colour_click)
                         colour = "Blue"
-                    if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Green"
-                    if self.draw_button(screen, 410,400,100,50, "Black").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Black"
-                    if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Pink"
-                    if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Yellow"
-                    if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
-                        colour = "Orange"
+                        coin_score -= cost22
+                        self.update_color_ownership(colour_index,2)
+                        
+                    if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos) and coin_score >= 10:
+                        
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Green"
+                            coin_score -= cost33
+                            self.update_color_ownership(colour_index,2)
+                   
+                    if self.draw_button(screen, 410,400,100,50, "Red").collidepoint(event.pos) and coin_score >= 25:
+                        
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Red"
+                            coin_score -= cost44
+                            self.update_color_ownership(colour_index,2)
+                       
+                    if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos) and coin_score >= 50:
+                       
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Pink"
+                            coin_score -= cost55
+                            self.update_color_ownership(colour_index,2)
+                       
+                    if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos) and coin_score >= 100:
+                       
+                            
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Yellow"
+                            coin_score -= cost66
+                            self.update_color_ownership(colour_index,2)
+                        
+                    if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) and coin_score >= 1000:
+                      
+                            pygame.mixer.Sound.play(colour_click)
+                            colour = "Orange"
+                            coin_score -= cost77
+                            self.update_color_ownership(colour_index,2)
+                       
                     if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
                         return colour
-                    
-                        
+            
+            
+            cost1 = 0
+            cost2 = 5
+            cost3 = 10
+            cost4 = 25
+            cost5 = 50
+            cost6 = 100
+            cost7 = 1000          
             
             screen.fill(WHITE)
             text = font.render("Welcome to the cosmetics store", True, BLACK)
             text2 = font.render("Pick your colour",True,BLACK)
+            cost1 = font.render(f"Cost:{cost1}",True,BLACK)
+            cost2 = font.render(f"Cost:{cost2}",True,BLACK)
+            cost3 = font.render(f"Cost:{cost3}",True,BLACK)
+            cost4 = font.render(f"Cost:{cost4}",True,BLACK)
+            cost5 = font.render(f"Cost:{cost5}",True,BLACK)
+            cost6 = font.render(f"Cost:{cost6}",True,BLACK)
+            cost7 = font.render(f"Cost:{cost7}",True,BLACK)
+            
             screen.blit(text, (210, 240))
             screen.blit(text2,(310,300))
-            self.draw_button(screen, 50, 400, 100, 50, "Red")
-            self.draw_button(screen,170,400,100,50,"Blue")
-            self.draw_button(screen, 290, 400, 100, 50, "Green")
-            self.draw_button(screen,410,400,100,50,"Black")
-            self.draw_button(screen, 530, 400, 100, 50, "Pink")
-            self.draw_button(screen,650,400,100,50,"Yellow")
+            self.draw_button(screen, 50, 390, 100, 50, "Black")
+            screen.blit(cost1,(62,444))
+            self.draw_button(screen,170,390,100,50,"Blue")
+            screen.blit(cost2,(170+12,444))
+            self.draw_button(screen, 290, 390, 100, 50, "Green")
+            screen.blit(cost3,(290+7,444))
+            self.draw_button(screen,410,390,100,50,"Red")
+            screen.blit(cost4,(410+7,444))
+            self.draw_button(screen, 530, 390, 100, 50, "Pink")
+            screen.blit(cost5,(537,444))
+            self.draw_button(screen,650,390,100,50,"Yellow")
+            screen.blit(cost6,(650,444))
             self.draw_button(screen, 350, 470, 100, 50, "Orange")
-            
+            screen.blit(cost7,(342,470+54))
             
             self.draw_button(screen,700,15,90,50,"Return")
-            
+            coin_surface = font.render("Coins: " + str(coin_score), True, BLACK)
+            screen.blit(coin_surface, (10, 10))
             pygame.display.update()
-            
 
     def game(self,colour):
         # Initialize Pygame
