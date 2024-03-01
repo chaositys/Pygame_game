@@ -78,7 +78,7 @@ class Game:
         cost55 = 50
         cost66 = 100
         cost77 = 1000
-        colour_index = 0
+        
         while running:
             
             for event in pygame.event.get():
@@ -90,7 +90,7 @@ class Game:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Black"
                             coin_score -= cost11
-                            self.update_color_ownership(colour_index,2)
+                          
                        
                             
                     if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos) and coin_score >= 5:
@@ -100,28 +100,28 @@ class Game:
                         pygame.mixer.Sound.play(colour_click)
                         colour = "Blue"
                         coin_score -= cost22
-                        self.update_color_ownership(colour_index,2)
+                        
                         
                     if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos) and coin_score >= 10:
                         
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Green"
                             coin_score -= cost33
-                            self.update_color_ownership(colour_index,2)
+                            
                    
                     if self.draw_button(screen, 410,400,100,50, "Red").collidepoint(event.pos) and coin_score >= 25:
                         
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Red"
                             coin_score -= cost44
-                            self.update_color_ownership(colour_index,2)
+                            
                        
                     if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos) and coin_score >= 50:
                        
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
                             coin_score -= cost55
-                            self.update_color_ownership(colour_index,2)
+                            
                        
                     if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos) and coin_score >= 100:
                        
@@ -129,14 +129,14 @@ class Game:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Yellow"
                             coin_score -= cost66
-                            self.update_color_ownership(colour_index,2)
+                          
                         
                     if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) and coin_score >= 1000:
                       
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Orange"
                             coin_score -= cost77
-                            self.update_color_ownership(colour_index,2)
+                            
                        
                     if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
