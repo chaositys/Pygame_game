@@ -1,9 +1,8 @@
 import pygame
 from pygame.locals import *
 import random
-import base64
 import base64encode_decode
-
+import time
 
 class Game:
     @staticmethod
@@ -86,6 +85,7 @@ class Game:
         cost66 = 100
         cost77 = 1000
         colour_index = 0
+        time.sleep(0.05)
         while running:
             coin_file = open("coinscore.txt","w")
             hold = base64encode_decode.encode(coin_score)
@@ -96,7 +96,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.draw_button(screen, 50, 400, 100, 50, "Black").collidepoint(event.pos) and coin_score >= 0 :
+                    if self.draw_button(screen, 50, 400, 100, 50, "Black").collidepoint(event.pos)  :
                         colour_index = 0
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
@@ -104,7 +104,7 @@ class Game:
                             Colour_list_hold.append(line.strip())
                        
                         colour_file.close()
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 0:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Black"
                             coin_score -= cost11
@@ -129,7 +129,7 @@ class Game:
                         colour_file.close()
                         
                         colour_index = 1
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 5:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Blue"
                             coin_score -= cost22
@@ -151,7 +151,7 @@ class Game:
                      
                         colour_file.close()
                         colour_index = 2
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 10:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Green"
                             coin_score -= cost33
@@ -172,7 +172,7 @@ class Game:
                       
                         colour_file.close()
                         colour_index = 3
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 25:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Red"
                             coin_score -= cost44
@@ -193,7 +193,7 @@ class Game:
                     
                         colour_file.close()
                         colour_index = 4
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 50:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
                             colour_file = open("colour_checker.txt","r+")
@@ -205,7 +205,7 @@ class Game:
                             colour = "Pink"
                           
                        
-                    if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos) and coin_score >= 100:
+                    if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
                        
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
@@ -214,7 +214,7 @@ class Game:
                        
                         colour_file.close()
                         colour_index = 5
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0  and coin_score >= 100:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Yellow"
                             coin_score -= cost66
@@ -226,8 +226,8 @@ class Game:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Yellow"
                          
-                        colour_index = 18
-                    if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) and coin_score >= 1000 or self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) and int(Colour_list_hold[colour_index]) == 1:
+                        
+                    if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) :
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
@@ -235,9 +235,10 @@ class Game:
                         
                         colour_file.close()
                         colour_index = 6
-                        if int(Colour_list_hold[colour_index]) == 0:
+                        if int(Colour_list_hold[colour_index]) == 0 and coin_score>= 1000:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Orange"
+                            
                             coin_score -= cost77
                             colour_file = open("colour_checker.txt","r+")
                             colour_file.seek(colour_index+12)
