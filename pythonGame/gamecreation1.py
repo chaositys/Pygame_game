@@ -17,7 +17,7 @@ class Game:
         
         return button_rect
    
-    
+        
 
     def starting_game(self,colour):
         
@@ -47,7 +47,7 @@ class Game:
             text = font.render("Welcome to Dodge the Obstacles ", True, BLACK)
             screen.blit(text, (210, 240))
             self.draw_button(screen, 350, 400, 100, 50, "Play")
-            self.draw_button(screen,325,460,150,50,"Costomise")
+            self.draw_button(screen,325,460,150,50,"Customise")
             
             pygame.display.update()
     def costomise(self):
@@ -404,14 +404,32 @@ class Game:
         #load coin image
         coin = pygame.image.load("coin.png")
         #sound and music
-        
         background_music = pygame.mixer.music.load('song_background.mp3')
+# Play background music on loop
         pygame.mixer.music.play(-1)
+
+# Load sound effects
         sound_effects_death_sound = pygame.mixer.Sound('rock_sound.mp3')
         enemy_die = pygame.mixer.Sound('test_ground_hit.mp3')
-        
-        
-        # Main game loop
+
+        def change_volume(volume_level):
+        # Set the volume of background music
+            pygame.mixer.music.set_volume(volume_level)
+            sound_effects_death_sound.set_volume(volume_level)
+            enemy_die.set_volume(volume_level)
+
+    # Initial volume adjustment
+        volume = pygame.mixer.music.get_volume()
+        volume2 = enemy_die.get_volume()
+        volume3 = sound_effects_death_sound.get_volume()
+        volume = 1
+        volume2 = 1
+        volume3 = 1
+        if volume > 0.7:
+            volume = volume / 2
+            volume2 = volume / 2
+            volume3 = volume /2
+            change_volume(volume)
         running = True
         clock = pygame.time.Clock()
         
@@ -438,6 +456,29 @@ class Game:
                         coin_file.write(hold)
                         coin_file.close()
                         self.starting_game(past_self)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_i:
+                        volume += 0.05
+                        volume2 +=0.05
+                        volume3 += 0.05
+                        if volume > 1.0:  
+                            volume = 1.0
+                        if volume2 > 1.0:
+                            volume2 = 1.0
+                        if volume3 > 1.0:
+                            volume3 = 1.0
+                        change_volume(volume)
+                    elif event.key == pygame.K_o:
+                        volume -= 0.05
+                        volume2 -= 0.05
+                        volume3 -= 0.05
+                        if volume < 0.0:  
+                            volume = 0.0
+                        if volume2 < 0.0:  
+                            volume2 = 0.0
+                        if volume3 < 0.0:
+                            volume3 = 0.0
+                        change_volume(volume)
                                         
             
             keys = pygame.key.get_pressed()
