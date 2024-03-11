@@ -58,10 +58,37 @@ class Game:
         Colour_list_hold = []
         for line in colour_file:
             Colour_list_hold.append(line.strip())
-        print (Colour_list_hold)
         colour_file.close()
         coin_file.close()
+        if int(Colour_list_hold[0]) == 0:
         
+            cost1 = 0
+        else:
+            cost1 = "Owned"
+        if int(Colour_list_hold[1]) == 0:
+            cost2 = 5
+        else:
+            cost2 = "Owned"
+        if int(Colour_list_hold[2]) == 0:
+            cost3 = 10
+        else:
+            cost3 = "Owned"
+        if int(Colour_list_hold[3]) == 0:
+            cost4 = 25
+        else:
+            cost4 = "Owned"
+        if int(Colour_list_hold[4]) == 0:
+            cost5 = 50
+        else:
+            cost5 = "Owned"
+        if int(Colour_list_hold[5]) == 0:
+            cost6 = 100
+        else:
+            cost6 = "Owned"
+        if int(Colour_list_hold[6]) == 0:
+            cost7 = 1000      
+        else:
+            cost7 = "Owned"    
         
         coin_score = ttemp
 
@@ -84,6 +111,7 @@ class Game:
         cost55 = 50
         cost66 = 100
         cost77 = 1000
+        
         colour_index = 0
         time.sleep(0.05)
         while running:
@@ -91,7 +119,35 @@ class Game:
             hold = base64encode_decode.encode(coin_score)
             coin_file.write(hold)
             coin_file.close()
-            
+            if int(Colour_list_hold[0]) == 0:
+        
+                cost1 = 0
+            else:
+                cost1 = "Owned"
+            if int(Colour_list_hold[1]) == 0:
+                cost2 = 5
+            else:
+                cost2 = "Owned"
+            if int(Colour_list_hold[2]) == 0:
+                cost3 = 10
+            else:
+                cost3 = "Owned"
+            if int(Colour_list_hold[3]) == 0:
+                cost4 = 25
+            else:
+                cost4 = "Owned"
+            if int(Colour_list_hold[4]) == 0:
+                cost5 = 50
+            else:
+                cost5 = "Owned"
+            if int(Colour_list_hold[5]) == 0:
+                cost6 = 100
+            else:
+                cost6 = "Owned"
+            if int(Colour_list_hold[6]) == 0:
+                cost7 = 1000      
+            else:
+                cost7 = "Owned"    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -258,42 +314,65 @@ class Game:
                         return colour
             
             
-            cost1 = 0
-            cost2 = 5
-            cost3 = 10
-            cost4 = 25
-            cost5 = 50
-            cost6 = 100
-            cost7 = 1000          
+          
             
             screen.fill(WHITE)
             text = font.render("Welcome to the cosmetics store", True, BLACK)
             text2 = font.render("Pick your colour",True,BLACK)
-            cost1 = font.render(f"Cost:{cost1}",True,BLACK)
-            cost2 = font.render(f"Cost:{cost2}",True,BLACK)
-            cost3 = font.render(f"Cost:{cost3}",True,BLACK)
-            cost4 = font.render(f"Cost:{cost4}",True,BLACK)
-            cost5 = font.render(f"Cost:{cost5}",True,BLACK)
-            cost6 = font.render(f"Cost:{cost6}",True,BLACK)
-            cost7 = font.render(f"Cost:{cost7}",True,BLACK)
-            
+            cost111 = font.render(f"Cost:{cost1}",True,BLACK)
+           
+            cost222 = font.render(f"Cost:{cost2}",True,BLACK)
+            cost333 = font.render(f"Cost:{cost3}",True,BLACK)
+            cost444 = font.render(f"Cost:{cost4}",True,BLACK)
+            cost555 = font.render(f"Cost:{cost5}",True,BLACK)
+            cost666 = font.render(f"Cost:{cost6}",True,BLACK)
+            cost777 = font.render(f"Cost:{cost7}",True,BLACK)
+            colour_file = open("colour_checker.txt","r")
+            Colour_list_hold = []
+            for line in colour_file:
+                Colour_list_hold.append(line.strip())
             screen.blit(text, (210, 240))
             screen.blit(text2,(310,300))
             self.draw_button(screen, 50, 390, 100, 50, "Black")
-            screen.blit(cost1,(62,444))
+            if cost1 != "Owned":
+                screen.blit(cost111,(62,444))
+            else: 
+                screen.blit((font.render(cost1,True,BLACK)),(62-2,444))
+                
             self.draw_button(screen,170,390,100,50,"Blue")
-            screen.blit(cost2,(170+12,444))
+            if cost2 != "Owned":
+                screen.blit(cost222,(170+12,444))
+            else:
+                screen.blit((font.render(cost2,True,BLACK)),(170+10,444))
             self.draw_button(screen, 290, 390, 100, 50, "Green")
-            screen.blit(cost3,(290+7,444))
+            if cost3 != "Owned":
+              
+                screen.blit(cost333,(290+7,444))
+            else:
+                screen.blit(font.render(cost3,True,BLACK),(290+10,444))
+             
             self.draw_button(screen,410,390,100,50,"Red")
-            screen.blit(cost4,(410+7,444))
+            if cost4 != "Owned":
+                screen.blit(cost444,(410+7,444))
+             
+            elif cost4 == "Owned":
+                screen.blit(font.render(cost4,True,BLACK),(410+9,444))
+              
             self.draw_button(screen, 530, 390, 100, 50, "Pink")
-            screen.blit(cost5,(537,444))
+            if cost5 != "Owned":
+                screen.blit(cost555,(537,444))
+            else:
+                screen.blit((font.render(cost5,True,BLACK)),(537,444))
             self.draw_button(screen,650,390,100,50,"Yellow")
-            screen.blit(cost6,(650,444))
+            if cost6 != "Owned":
+                screen.blit(cost666,(650,444))
+            else:
+                screen.blit(font.render(cost6,True,BLACK),(650+7,444))
             self.draw_button(screen, 350, 470, 100, 50, "Orange")
-            screen.blit(cost7,(342,470+54))
-            
+            if cost7 != "Owned":
+                screen.blit(cost777,(342,470+54))
+            else:
+                screen.blit(font.render(cost7,True,BLACK),(358,470+54))
             self.draw_button(screen,700,15,90,50,"Return")
             
             coin_surface = font.render("Coins: " + str(coin_score), True, BLACK)
