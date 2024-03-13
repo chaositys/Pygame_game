@@ -35,6 +35,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.draw_button(screen, 350, 400, 100, 50, "Play").collidepoint(event.pos):
                         self.game(colour)
@@ -151,16 +152,18 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.draw_button(screen, 50, 400, 100, 50, "Black").collidepoint(event.pos)  :
-                        colour_index = 0
+                        
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
                             Colour_list_hold.append(line.strip())
                        
                         colour_file.close()
-                        if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 0:
+                        colour_index = 0
+                        if int(Colour_list_hold[colour_index]) == 0:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Black"
                             coin_score -= cost11
@@ -168,15 +171,13 @@ class Game:
                             colour_file.seek(colour_index)
                             colour_file.write(str(1))
                             colour_file.close()
-                        elif Colour_list_hold[colour_index] == 1:
+                        elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Black"
-                        else:
-                            pygame.mixer.Sound.play(colour_click)
-                            colour = "Black"
+                        
                        
                             
-                    if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos) and coin_score >= 5:
+                    if self.draw_button(screen, 170,400,100,50, "Blue").collidepoint(event.pos) :
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
@@ -199,7 +200,7 @@ class Game:
                         
                             
                         
-                    if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos) and coin_score >= 10:
+                    if self.draw_button(screen, 290, 400, 100, 50, "Green").collidepoint(event.pos):
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
@@ -218,9 +219,9 @@ class Game:
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Green"
-                          
+                        
                    
-                    if self.draw_button(screen, 410,400,100,50, "Red").collidepoint(event.pos) and coin_score >= 25:
+                    if self.draw_button(screen, 410,400,100,50, "Red").collidepoint(event.pos) :
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
@@ -239,9 +240,9 @@ class Game:
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Red"
-                          
+                        
                        
-                    if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos) and coin_score >= 50:
+                    if self.draw_button(screen, 530, 400, 100, 50, "Pink").collidepoint(event.pos):
                         colour_file = open("colour_checker.txt","r")
                         Colour_list_hold = []
                         for line in colour_file:
@@ -252,6 +253,7 @@ class Game:
                         if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 50:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
+                            cost-=55
                             colour_file = open("colour_checker.txt","r+")
                             colour_file.seek(colour_index+8)
                             colour_file.write(str(1))
@@ -259,7 +261,7 @@ class Game:
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
-                          
+                        
                        
                     if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
                        
@@ -281,7 +283,7 @@ class Game:
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Yellow"
-                         
+                        
                         
                     if self.draw_button(screen, 350, 470, 100, 50, "Orange").collidepoint(event.pos) :
                         colour_file = open("colour_checker.txt","r")
@@ -291,6 +293,7 @@ class Game:
                         
                         colour_file.close()
                         colour_index = 6
+                        print(Colour_list_hold[colour_index])
                         if int(Colour_list_hold[colour_index]) == 0 and coin_score>= 1000:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Orange"
@@ -300,13 +303,12 @@ class Game:
                             colour_file.seek(colour_index+12)
                             colour_file.write(str(1))
                             colour_file.close()
+                            
                         elif int(Colour_list_hold[colour_index]) == 1:
                             
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Orange"
-                        else:
-                            pygame.mixer.Sound.play(colour_click)
-                            colour = "Orange"
+                        
                             
                        
                     if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
@@ -336,43 +338,71 @@ class Game:
             self.draw_button(screen, 50, 390, 100, 50, "Black")
             if cost1 != "Owned":
                 screen.blit(cost111,(62,444))
-            else: 
-                screen.blit((font.render(cost1,True,BLACK)),(62-2,444))
+            else:
+                if colour == "Black":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(62-17,444))
+                else:
+                    screen.blit((font.render(cost1,True,BLACK)),(62-2,444))
                 
             self.draw_button(screen,170,390,100,50,"Blue")
             if cost2 != "Owned":
                 screen.blit(cost222,(170+12,444))
             else:
-                screen.blit((font.render(cost2,True,BLACK)),(170+10,444))
+                if colour == "Blue":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(170+8-17,444))
+                else:
+                    screen.blit((font.render(cost2,True,BLACK)),(170+10,444))
             self.draw_button(screen, 290, 390, 100, 50, "Green")
             if cost3 != "Owned":
               
                 screen.blit(cost333,(290+7,444))
             else:
-                screen.blit(font.render(cost3,True,BLACK),(290+10,444))
+                if colour == "Green":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(290+8-17,444))
+                else:
+                    screen.blit(font.render(cost3,True,BLACK),(290+10,444))
              
             self.draw_button(screen,410,390,100,50,"Red")
             if cost4 != "Owned":
                 screen.blit(cost444,(410+7,444))
              
             elif cost4 == "Owned":
-                screen.blit(font.render(cost4,True,BLACK),(410+9,444))
+                if colour == "Red":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(410+7-17,444))
+                else:
+                    screen.blit(font.render(cost4,True,BLACK),(410+9,444))
               
             self.draw_button(screen, 530, 390, 100, 50, "Pink")
             if cost5 != "Owned":
                 screen.blit(cost555,(537,444))
             else:
-                screen.blit((font.render(cost5,True,BLACK)),(537,444))
+                if colour == "Pink":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(537-19,444))
+                else:
+                    screen.blit((font.render(cost5,True,BLACK)),(537,444))
             self.draw_button(screen,650,390,100,50,"Yellow")
             if cost6 != "Owned":
                 screen.blit(cost666,(650,444))
             else:
-                screen.blit(font.render(cost6,True,BLACK),(650+7,444))
+                if colour == "Yellow":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(650-12,444))
+                else:
+                    screen.blit(font.render(cost6,True,BLACK),(650+7,444))
             self.draw_button(screen, 350, 470, 100, 50, "Orange")
             if cost7 != "Owned":
                 screen.blit(cost777,(342,470+54))
             else:
-                screen.blit(font.render(cost7,True,BLACK),(358,470+54))
+                if colour == "Orange":
+                    name_colour = font.render("Equipped",True,BLACK)
+                    screen.blit(name_colour,(356-12,470+54))
+                else:
+                    screen.blit(font.render(cost7,True,BLACK),(358,470+54))
             self.draw_button(screen,700,15,90,50,"Return")
             
             coin_surface = font.render("Coins: " + str(coin_score), True, BLACK)
@@ -397,7 +427,8 @@ class Game:
         
        
         coin_score = ttemp
-      
+        coin_boost = 1
+        points_boost = 1
         int(coin_score)
         
         
@@ -443,7 +474,7 @@ class Game:
         font = pygame.font.Font(None, 36)
 
         # Set up game variables
-        
+        timer = 0
         player_x = 400
         player_y = 500
         player_width = 50
@@ -466,7 +497,10 @@ class Game:
         coin_width = 36
         coin_radius = coin_width/2
         
+        TIMER_EVENT = pygame.USEREVENT + 1
         
+        POINTS_TIMER_EVENT = pygame.USEREVENT + 2
+
         score = 0
 
         cloud_random_number = random.randint(0,2)
@@ -482,6 +516,10 @@ class Game:
         grass = pygame.image.load("grass.png")
         #load coin image
         coin = pygame.image.load("coin.png")
+        #load coin 2x image
+        coin_boost_png = pygame.image.load("2X_coins.png")
+        #load points 2x image
+        points_boost_png = pygame.image.load("2X_points.png")
         #sound and music
         background_music = pygame.mixer.music.load('song_background.mp3')
 # Play background music on loop
@@ -511,12 +549,17 @@ class Game:
             change_volume(volume)
         running = True
         clock = pygame.time.Clock()
-        
-        
+        timer = 5#
+        timer_true = False
+        Points_timer = 5
+        timer_True_points = False
+        placed2 = False
+        placed3 = False
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and player_alive == False:
                     if self.draw_button(screen, 350, 400, 100, 50, "Return").collidepoint(event.pos):
                         
@@ -558,8 +601,15 @@ class Game:
                         if volume3 < 0.0:
                             volume3 = 0.0
                         change_volume(volume)
-                                        
-            
+                elif event.type == TIMER_EVENT:
+            # Timer event occurs every 5 seconds
+                    timer = 5
+                    print("ITTTTT WORKSSSSSSS!!!!!!")
+                    timer_true = False                    
+                elif event.type == POINTS_TIMER_EVENT:
+                    print("points task worked ")
+                    Points_timer = 5
+                    timer_True_points = False
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
                 player_x -= 17
@@ -612,12 +662,12 @@ class Game:
                 
                 obstacle_y = 0
                 obstacle_x = random.randint(0, 750)
-                score += 1
+                score += 1* points_boost
                 obstacle_speed = 20 + score // 2  # Increase speed every 5 points
                 not_been_played = True
             if placed == False:
-                coin_number = random.randint(1,180)
-                if coin_number == 125:
+                coin_number = random.randint(1,100)
+                if coin_number == 15:
                     coin_x = random.randint(50,700)
                     
                     
@@ -629,10 +679,62 @@ class Game:
                     placed = False
                     
                     
-                    coin_score += 1
+                    coin_score += 1*coin_boost
+            if placed2 == False and timer == 5:
+                coin_number = random.randint(1,210)
+                coin_boost = 1
+            
+                if coin_number == 205:
+                    timer = 0
+                    coin_x2 = random.randint(50,700)
                     
+                    placed2 = True
+            
+            if placed2  == True :
+                
+                screen.blit(coin_boost_png,(coin_x2,coin_y))
+                if player_x < coin_x2+ coin_radius+5 and player_x +player_width> coin_x2 and player_alive == True:
+                    placed2 = False
+                    coin_boost = 2
+                    timer_true = True
                     
-            # Check collision
+            if coin_boost == 2 and player_alive == True:
+                screen.blit(coin_boost_png,(750,10))
+            
+                
+            if timer_true == True:
+                timer = pygame.time.set_timer(TIMER_EVENT, 5000)
+                timer_true = False
+            
+            
+            
+            
+            if placed3 == False and Points_timer == 5:
+                coin_number = random.randint(1,210)
+                points_boost = 1
+            
+                if coin_number == 205:
+                    timer = 0
+                    coin_x3 = random.randint(50,700)
+                    
+                    placed3 = True
+            
+            if placed3  == True and player_alive == True:
+                
+                screen.blit(points_boost_png,(coin_x3,coin_y))
+                if player_x < coin_x3+ coin_radius+5 and player_x +player_width> coin_x3 and player_alive == True:
+                    placed3 = False
+                    points_boost = 2
+                    timer_True_points = True
+                    
+            if points_boost == 2 and player_alive == True:
+                screen.blit(points_boost_png,(750,100))
+            
+                
+            if timer_True_points == True:
+                Points_timer = pygame.time.set_timer(POINTS_TIMER_EVENT, 5000)
+                timer_True_points = False
+            # Check collision with enem y
             if player_x < obstacle_x + obstacle_width and player_x + player_width > obstacle_x and player_y < obstacle_y + obstacle_height and player_y + player_height > obstacle_y:
                 pygame.mixer.Sound.play(sound_effects_death_sound)
                 obstacle_y = 0
@@ -670,8 +772,9 @@ class Game:
             
             # Display score
             score_surface = font.render("Score: " + str(score), True, BLACK)
+            coin_surface = font.render("Coins: " + str(coin_score),True,BLACK)
             screen.blit(score_surface, (10, 10))
-            
+            screen.blit(coin_surface,(10, 50))
             pygame.display.flip()
 
             clock.tick(30)
