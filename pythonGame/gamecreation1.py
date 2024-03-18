@@ -40,8 +40,11 @@ class Game:
                     if self.draw_button(screen, 350, 400, 100, 50, "Play").collidepoint(event.pos):
                         self.game(colour)
                         pygame.mixer.Sound.play(colour_click)
-                    if self.draw_button(screen,350,460,150,50,"Costomise").collidepoint(event.pos):
+                    if self.draw_button(screen,325,460,150,50,"Costomise").collidepoint(event.pos):
                         colour = self.costomise()
+                        pygame.mixer.Sound.play(colour_click)
+                    if self.draw_button(screen,325,530,150,50,"Information").collidepoint(event.pos):
+                        colour = self.information()
                         pygame.mixer.Sound.play(colour_click)
             
             screen.fill(WHITE)
@@ -49,6 +52,44 @@ class Game:
             screen.blit(text, (210, 240))
             self.draw_button(screen, 350, 400, 100, 50, "Play")
             self.draw_button(screen,325,460,150,50,"Customise")
+            self.draw_button(screen,325,522,150,50,"Information")
+            
+            pygame.display.update()
+    def information(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
+        
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                        return
+                    elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                    elif self.draw_button(screen,290,460-120,220,50,"Everything else").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                    elif self.draw_button(screen,250,520-120,295,50,"Score and coin system").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                    elif self.draw_button(screen,155,580-120,480,50,"controls (you can change the volume)").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+            screen.fill(WHITE)
+            text = font.render("Information", True, BLACK)
+            screen.blit(text, (330, 240))
+            self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
+            self.draw_button(screen,290,460-120,220,50,"Everything else")
+            self.draw_button(screen,250,520-120,295,50,"Score and coin system")
+            self.draw_button(screen,155,580-120,480,50,"controls (you can change the volume)")
+            self.draw_button(screen,700,15,90,50,"Return")
             
             pygame.display.update()
     def costomise(self):
@@ -496,6 +537,9 @@ class Game:
         placed = False
         coin_width = 36
         coin_radius = coin_width/2
+        slot1 = 0
+        slot2 = 0
+       
         
         TIMER_EVENT = pygame.USEREVENT + 1
         
@@ -605,11 +649,19 @@ class Game:
             # Timer event occurs every 5 seconds
                     timer = 5
                     print("ITTTTT WORKSSSSSSS!!!!!!")
-                    timer_true = False                    
+                    timer_true = False
+                    if slot1 == 1:
+                        slot1 = 0
+                    elif slot2 == 1:
+                        slot2 = 0
                 elif event.type == POINTS_TIMER_EVENT:
                     print("points task worked ")
                     Points_timer = 5
                     timer_True_points = False
+                    if slot1 == 2:
+                        slot1 = 0
+                    elif slot2 == 2:
+                        slot2 = 0
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
                 player_x -= 17
@@ -698,13 +750,18 @@ class Game:
                     coin_boost = 2
                     timer_true = True
                     
-            if coin_boost == 2 and player_alive == True:
+            if coin_boost == 2 and player_alive is True and (slot1  == 0 or slot1 == 1):
                 screen.blit(coin_boost_png,(750,10))
+                slot1 = 1
+            elif coin_boost == 2 and player_alive is True and slot1 != 0 and slot1 != 1 and (slot2 == 0 or slot2 == 1):
+                screen.blit(coin_boost_png,(750,75))
+                slot2 == 1
             
                 
             if timer_true == True:
                 timer = pygame.time.set_timer(TIMER_EVENT, 5000)
                 timer_true = False
+                
             
             
             
@@ -727,9 +784,13 @@ class Game:
                     points_boost = 2
                     timer_True_points = True
                     
-            if points_boost == 2 and player_alive == True:
-                screen.blit(points_boost_png,(750,100))
             
+            if points_boost == 2 and player_alive is True and (slot1  == 0 or slot1 == 2):
+                screen.blit(points_boost_png,(750,10))
+                slot1 = 2
+            elif points_boost == 2 and player_alive is True and slot1 != 0 and slot1 != 2 and (slot2 == 0 or slot2 == 2):
+                screen.blit(points_boost_png,(750,75))
+                slot2 = 2
                 
             if timer_True_points == True:
                 Points_timer = pygame.time.set_timer(POINTS_TIMER_EVENT, 5000)
