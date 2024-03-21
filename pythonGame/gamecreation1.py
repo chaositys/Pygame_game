@@ -44,7 +44,7 @@ class Game:
                         colour = self.costomise()
                         pygame.mixer.Sound.play(colour_click)
                     if self.draw_button(screen,325,530,150,50,"Information").collidepoint(event.pos):
-                        colour = self.information()
+                        self.information()
                         pygame.mixer.Sound.play(colour_click)
             
             screen.fill(WHITE)
@@ -55,7 +55,54 @@ class Game:
             self.draw_button(screen,325,522,150,50,"Information")
             
             pygame.display.update()
-    def information(self):
+    def Powerups(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        font2 = pygame.font.Font(None, 26)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
+        coin = pygame.image.load("coin.png")
+        #load coin 2x image
+        coin_boost_png = pygame.image.load("2X_coins.png")
+        #load points 2x image
+        points_boost_png = pygame.image.load("2X_points.png")
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                        return
+                    
+            screen.fill(WHITE)
+            text = font.render("Powerups", True, BLACK,)
+            
+            x2_coin_powerup_part1 = font2.render("This powerup will grant you 2x coins it will last every 5 seconds.",True,BLACK)
+            x2_coin_powerup_part2 = font2.render("When picked up, it will disappear from the collision spot," ,True,BLACK)
+            x2_coin_powerup_part3 = font2.render("and appear in the top right corner.",True,BLACK)
+            
+            x2_points_powerup_part1 = font2.render("Once you activate this powerup to double your points for 5 seconds.", True, BLACK) 
+            x2_points_powerup_part2 = font2.render("Once collected, it will vanish from its current location", True, BLACK) 
+            x2_points_powerup_part3 = font2.render("and reappear in the upper right corner of the screen.", True, BLACK)
+            screen.blit(coin_boost_png,(370,270))
+            screen.blit(text, (337, 240))
+            screen.blit(x2_coin_powerup_part1, (22+116, 320))
+            screen.blit(x2_coin_powerup_part2, (60+110, 360))
+            screen.blit(x2_coin_powerup_part3, (197+70, 400))
+            screen.blit(points_boost_png,(370,435))
+            screen.blit(x2_coin_powerup_part1, (22+116, 480))
+            screen.blit(x2_coin_powerup_part2, (60+110, 520))
+            screen.blit(x2_coin_powerup_part3, (197+60, 560))
+            self.draw_button(screen,700,15,90,50,"Return")
+            
+            pygame.display.update()
+    def Score_and_coin_system(self):
         pygame.init()
         screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Dodge the Obstacles")
@@ -76,12 +123,110 @@ class Game:
                         return
                     elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
+
+            screen.fill(WHITE)
+            text = font.render("Information", True, BLACK)
+            screen.blit(text, (330, 240))
+            self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
+            self.draw_button(screen,700,15,90,50,"Return")
+            
+            pygame.display.update()
+    def controls(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
+        
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                        return
+                    elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+
+            screen.fill(WHITE)
+            text = font.render("Information", True, BLACK)
+            screen.blit(text, (330, 240))
+            self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
+            self.draw_button(screen,700,15,90,50,"Return")
+            
+            pygame.display.update()
+    def Everything_else(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
+        
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                        return
+                    elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+
+            screen.fill(WHITE)
+            text = font.render("Information", True, BLACK)
+            screen.blit(text, (330, 240))
+            self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
+            self.draw_button(screen,700,15,90,50,"Return")
+            
+            pygame.display.update()
+        
+    def information(self):
+        pygame.init()
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Dodge the Obstacles")
+        font = pygame.font.Font(None, 36)
+        WHITE = (255, 255, 255)
+        BLACK = (0, 0, 0)
+        running = True
+        colour_click = pygame.mixer.Sound("colour_click.mp3")
+        
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    quit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
+                        pygame.mixer.Sound.play(colour_click)
+                        return
+                    elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
+                        
+                        pygame.mixer.Sound.play(colour_click)
+                        
+                        self.Powerups()
                     elif self.draw_button(screen,290,460-120,220,50,"Everything else").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
+                        
+                        self.Everything_else()
                     elif self.draw_button(screen,250,520-120,295,50,"Score and coin system").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
+                        
+                        self.Score_and_coin_system()
                     elif self.draw_button(screen,155,580-120,480,50,"controls (you can change the volume)").collidepoint(event.pos):
+                        
                         pygame.mixer.Sound.play(colour_click)
+                        
+                        self.controls()
             screen.fill(WHITE)
             text = font.render("Information", True, BLACK)
             screen.blit(text, (330, 240))
@@ -92,6 +237,7 @@ class Game:
             self.draw_button(screen,700,15,90,50,"Return")
             
             pygame.display.update()
+    
     def costomise(self):
         coin_file = open("coinscore.txt","r")
         temp = str(coin_file.read())
@@ -294,7 +440,7 @@ class Game:
                         if int(Colour_list_hold[colour_index]) == 0 and coin_score >= 50:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
-                            cost-=55
+                            coin_score -= cost55
                             colour_file = open("colour_checker.txt","r+")
                             colour_file.seek(colour_index+8)
                             colour_file.write(str(1))
@@ -768,9 +914,11 @@ class Game:
             
             if placed3 == False and Points_timer == 5:
                 coin_number = random.randint(1,210)
+                
                 points_boost = 1
             
                 if coin_number == 205:
+                
                     timer = 0
                     coin_x3 = random.randint(50,700)
                     
@@ -786,8 +934,10 @@ class Game:
                     
             
             if points_boost == 2 and player_alive is True and (slot1  == 0 or slot1 == 2):
+                
                 screen.blit(points_boost_png,(750,10))
                 slot1 = 2
+                
             elif points_boost == 2 and player_alive is True and slot1 != 0 and slot1 != 2 and (slot2 == 0 or slot2 == 2):
                 screen.blit(points_boost_png,(750,75))
                 slot2 = 2
@@ -827,7 +977,6 @@ class Game:
                 
                 
                     
-                
 
                     
             
@@ -836,16 +985,16 @@ class Game:
             coin_surface = font.render("Coins: " + str(coin_score),True,BLACK)
             screen.blit(score_surface, (10, 10))
             screen.blit(coin_surface,(10, 50))
+            
             pygame.display.flip()
 
             clock.tick(30)
         
         pygame.quit()
         
-                
+            
 if __name__ == '__main__':
     colour = "black"
     game_instance = Game()
     
     game_instance.starting_game(colour)
-    
