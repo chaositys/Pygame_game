@@ -65,7 +65,7 @@ class Game:
         BLACK = (0, 0, 0)
         running = True
         colour_click = pygame.mixer.Sound("colour_click.mp3")
-        coin = pygame.image.load("coin.png")
+        
         #load coin 2x image
         coin_boost_png = pygame.image.load("2X_coins.png")
         #load points 2x image
@@ -85,20 +85,20 @@ class Game:
             
             x2_coin_powerup_part1 = font2.render("This powerup will grant you 2x coins it will last every 5 seconds.",True,BLACK)
             x2_coin_powerup_part2 = font2.render("When picked up, it will disappear from the collision spot," ,True,BLACK)
-            x2_coin_powerup_part3 = font2.render("and appear in the top right corner.",True,BLACK)
+            x2_coin_powerup_part3 = font2.render("and will appear in the top right corner.",True,BLACK)
             
             x2_points_powerup_part1 = font2.render("Once you activate this powerup to double your points for 5 seconds.", True, BLACK) 
             x2_points_powerup_part2 = font2.render("Once collected, it will vanish from its current location", True, BLACK) 
-            x2_points_powerup_part3 = font2.render("and reappear in the upper right corner of the screen.", True, BLACK)
+            x2_points_powerup_part3 = font2.render("and reappear in the top right corner.", True, BLACK)
             screen.blit(coin_boost_png,(370,270))
             screen.blit(text, (337, 240))
             screen.blit(x2_coin_powerup_part1, (22+116, 320))
             screen.blit(x2_coin_powerup_part2, (60+110, 360))
-            screen.blit(x2_coin_powerup_part3, (197+70, 400))
+            screen.blit(x2_coin_powerup_part3, (197+60, 400))
             screen.blit(points_boost_png,(370,435))
-            screen.blit(x2_coin_powerup_part1, (22+116, 480))
-            screen.blit(x2_coin_powerup_part2, (60+110, 520))
-            screen.blit(x2_coin_powerup_part3, (197+60, 560))
+            screen.blit(x2_points_powerup_part1, (22+100, 480))
+            screen.blit(x2_points_powerup_part2, (60+110, 520))
+            screen.blit(x2_points_powerup_part3, (197+53, 560))
             self.draw_button(screen,700,15,90,50,"Return")
             
             pygame.display.update()
@@ -111,6 +111,7 @@ class Game:
         BLACK = (0, 0, 0)
         running = True
         colour_click = pygame.mixer.Sound("colour_click.mp3")
+        coin = pygame.image.load("coin.png")
         
         while running:
             for event in pygame.event.get():
@@ -121,13 +122,15 @@ class Game:
                     if self.draw_button(screen,700,15,90,50,"Return").collidepoint(event.pos):
                         pygame.mixer.Sound.play(colour_click)
                         return
-                    elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
-                        pygame.mixer.Sound.play(colour_click)
+                    #elif self.draw_button(screen,335, 400-120, 130, 50,"Powerups").collidepoint(event.pos):
+                        #pygame.mixer.Sound.play(colour_click)
 
             screen.fill(WHITE)
-            text = font.render("Information", True, BLACK)
-            screen.blit(text, (330, 240))
-            self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
+            
+            text = font.render("Score and coin sytem", True, BLACK)
+            screen.blit(coin,(380,270))
+            screen.blit(text, (280, 240))
+            #self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
             self.draw_button(screen,700,15,90,50,"Return")
             
             pygame.display.update()
@@ -794,14 +797,14 @@ class Game:
                 elif event.type == TIMER_EVENT:
             # Timer event occurs every 5 seconds
                     timer = 5
-                    print("ITTTTT WORKSSSSSSS!!!!!!")
+                   
                     timer_true = False
                     if slot1 == 1:
                         slot1 = 0
                     elif slot2 == 1:
                         slot2 = 0
                 elif event.type == POINTS_TIMER_EVENT:
-                    print("points task worked ")
+                    
                     Points_timer = 5
                     timer_True_points = False
                     if slot1 == 2:
