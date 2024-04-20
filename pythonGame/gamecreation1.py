@@ -9,14 +9,19 @@ class Game:
     def draw_button(screen, x, y, width, height, text):
         button_font = pygame.font.Font(None, 36)
         button_rect = pygame.Rect(x, y, width, height)
-        pygame.draw.rect(screen, (0, 255, 0), button_rect)
+
         
+        border_rect = pygame.Rect(x - 2, y - 2, width + 4, height + 4)
+        pygame.draw.rect(screen, (0, 0, 0), border_rect)
+       
+            
+        pygame.draw.rect(screen, (0, 200, 255), button_rect)
+
         text_surface = button_font.render(text, True, (0, 0, 0))
         text_rect = text_surface.get_rect(center=button_rect.center)
         screen.blit(text_surface, text_rect)
-        
+
         return button_rect
-   
         
 
     def starting_game(self,colour):
@@ -660,6 +665,7 @@ class Game:
         else:
             past_self = colour
             colour = BLACK
+            
         # Set up fonts
         font = pygame.font.Font(None, 36)
 
@@ -678,7 +684,7 @@ class Game:
         obstacle_height = 50
         obstacle_x = random.randint(0, 750)
         obstacle_y = 0
-        obstacle_speed = 20
+        obstacle_speed = 10
         
         coin_number = 0
         coin_y = 510
@@ -706,6 +712,7 @@ class Game:
         # Load tree image and grass
         tree_image = pygame.image.load("tree.png")
         num = random.randint(100,400)
+        face = pygame.image.load("face.png")
         grass = pygame.image.load("grass.png")
         #load coin image
         coin = pygame.image.load("coin.png")
@@ -758,6 +765,7 @@ class Game:
                         
                         
                         if score > int(highscore):
+                            
                             GameDataFile = open("gamedata.txt", "w")
                             
                             highscore = score
@@ -813,13 +821,13 @@ class Game:
                         slot2 = 0
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT] and player_x > 0:
-                player_x -= 17
+                player_x -= 17/2
             if keys[pygame.K_RIGHT] and player_x < 750:
-                player_x += 17
+                player_x += 17/2
             if keys[pygame.K_a] and player_x > 0:
-                player_x -= 17
+                player_x -= 17/2
             if keys[pygame.K_d] and player_x < 750:
-                player_x += 17
+                player_x += 17/2
             
             screen.fill(WHITE)
             pygame.draw.circle(screen,YELLOW,(10,10),80)
@@ -849,6 +857,7 @@ class Game:
             # Draw player
             if player_alive == True:
                 pygame.draw.rect(screen, colour, (player_x, player_y, player_width, player_height))
+                screen.blit(face,(player_x-6,player_y))
             
             # Draw obstacle
                 pygame.draw.rect(screen, RED, (obstacle_x, obstacle_y, obstacle_width, obstacle_height))
@@ -864,10 +873,10 @@ class Game:
                 obstacle_y = 0
                 obstacle_x = random.randint(0, 750)
                 score += 1* points_boost
-                obstacle_speed = 20 + score // 2  # Increase speed every 5 points
+                obstacle_speed = (20 + score // 2)/2  # Increase speed every 5 points
                 not_been_played = True
             if placed == False:
-                coin_number = random.randint(1,100)
+                coin_number = random.randint(1,200)
                 if coin_number == 15:
                     coin_x = random.randint(50,700)
                     
@@ -882,7 +891,7 @@ class Game:
                     
                     coin_score += 1*coin_boost
             if placed2 == False and timer == 5:
-                coin_number = random.randint(1,210)
+                coin_number = random.randint(1,420)
                 coin_boost = 1
             
                 if coin_number == 205:
@@ -916,7 +925,7 @@ class Game:
             
             
             if placed3 == False and Points_timer == 5:
-                coin_number = random.randint(1,210)
+                coin_number = random.randint(1,420)
                 
                 points_boost = 1
             
@@ -990,8 +999,8 @@ class Game:
             screen.blit(coin_surface,(10, 50))
             
             pygame.display.flip()
-
-            clock.tick(30)
+            slowmowmulti = 1
+            clock.tick(60*slowmowmulti)
         
         pygame.quit()
         
