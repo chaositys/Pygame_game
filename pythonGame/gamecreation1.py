@@ -1000,7 +1000,7 @@ class Game:
             
             pygame.display.flip()
             slowmowmulti = 1
-            clock.tick(60*slowmowmulti)
+            clock.tick(60*slowmowmulti)#tickrate for game
         
         pygame.quit()
         
