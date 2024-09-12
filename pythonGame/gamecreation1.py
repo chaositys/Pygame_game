@@ -133,7 +133,17 @@ class Game:
             screen.fill(WHITE)
             
             text = font.render("Score and coin sytem", True, BLACK)
-            screen.blit(coin,(380,270))
+            Score_text_1 = font.render("Score: you get +1 score every time the red block hits the floor",True,BLACK)
+            Score_text_2 = font.render("Try and beat My highscore of 103",True,BLACK)
+            Coin_text_1 = font.render("Coin: you gain 1 coin every time you pick up a coin from the floor",True,BLACK)
+            Coin_text_2 = font.render("Use coins to buy and unlock colours",True,BLACK)
+            Coin_text_3 = font.render("Try and unlock them all",True,BLACK)
+            screen.blit(Score_text_1, (40, 320))
+            screen.blit(Score_text_2, (90+110, 360))
+            screen.blit(Coin_text_1, (20, 400))
+            screen.blit(Coin_text_2, (80+100, 440))
+            screen.blit(Coin_text_3, (270, 480))
+            
             screen.blit(text, (280, 240))
             #self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
             self.draw_button(screen,700,15,90,50,"Return")
@@ -165,7 +175,12 @@ class Game:
             text = font.render("Information", True, BLACK)
             screen.blit(text, (330, 240))
             self.draw_button(screen, 335, 400-120, 130, 50, "Poweups")
-            self.draw_button(screen,700,15,90,50,"Return")
+            self.draw_button(screen,700,15,90,50,"Return")      
+            
+            
+            
+            
+            
             
             pygame.display.update()
     def Everything_else(self):
@@ -197,7 +212,7 @@ class Game:
             self.draw_button(screen,700,15,90,50,"Return")
             
             pygame.display.update()
-        
+         
     def information(self):
         pygame.init()
         screen = pygame.display.set_mode((800, 600))
@@ -207,7 +222,7 @@ class Game:
         BLACK = (0, 0, 0)
         running = True
         colour_click = pygame.mixer.Sound("colour_click.mp3")
-        
+
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -366,6 +381,7 @@ class Game:
                             colour_file.seek(colour_index)
                             colour_file.write(str(1))
                             colour_file.close()
+                        
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Black"
@@ -389,6 +405,7 @@ class Game:
                             colour_file.seek(colour_index+2)
                             colour_file.write(str(1))
                             colour_file.close()
+                            
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Blue"
@@ -411,6 +428,7 @@ class Game:
                             colour_file.seek(colour_index+4)
                             colour_file.write(str(1))
                             colour_file.close()
+                          
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Green"
@@ -432,6 +450,7 @@ class Game:
                             colour_file.seek(colour_index+6)
                             colour_file.write(str(1))
                             colour_file.close()
+                          
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Red"
@@ -453,6 +472,7 @@ class Game:
                             colour_file.seek(colour_index+8)
                             colour_file.write(str(1))
                             colour_file.close()
+                           
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Pink"
@@ -460,12 +480,13 @@ class Game:
                        
                     if self.draw_button(screen, 650,400,100,50, "Yellow").collidepoint(event.pos):
                        
-                        colour_file = open("colour_checker.txt","r")
-                        Colour_list_hold = []
-                        for line in colour_file:
-                            Colour_list_hold.append(line.strip())
-                       
-                        colour_file.close()
+                        with open("colour_checker.txt","r") as colour_file:
+                            
+                            Colour_list_hold = []
+                            for line in colour_file:
+                                Colour_list_hold.append(line.strip())
+                        
+                            
                         colour_index = 5
                         if int(Colour_list_hold[colour_index]) == 0  and coin_score >= 100:
                             pygame.mixer.Sound.play(colour_click)
@@ -475,6 +496,7 @@ class Game:
                             colour_file.seek(colour_index+10)
                             colour_file.write(str(1))
                             colour_file.close()
+                               
                         elif int(Colour_list_hold[colour_index]) == 1:
                             pygame.mixer.Sound.play(colour_click)
                             colour = "Yellow"
@@ -498,6 +520,7 @@ class Game:
                             colour_file.seek(colour_index+12)
                             colour_file.write(str(1))
                             colour_file.close()
+                               
                             
                         elif int(Colour_list_hold[colour_index]) == 1:
                             
@@ -615,6 +638,8 @@ class Game:
         highscore = temp
         int(highscore)
         GameDataFile.close()
+
+          
         
         coin_file = open("coinscore.txt","r")
         temp = str(coin_file.read())
@@ -625,10 +650,23 @@ class Game:
         coin_boost = 1
         points_boost = 1
         int(coin_score)
+        coin_file.close()
         
+        cloud_x_num_1  = random.randint(0,1000)
+        cloud_x_num_2  = random.randint(0,1000)
+        cloud_x_num_3  = random.randint(0,1000)
+        cloud_x_num_4  = random.randint(0,1000)
         
+       
+        cloud_y_num_1  =random.randint(30,270)
+        cloud_y_num_2  =random.randint(30,270)
+        cloud_y_num_3  =random.randint(30,270)
+        cloud_y_num_4  =random.randint(30,270)
         
-
+        sun_x_pos = 10
+        
+        moon_x_pos = 30
+        moon_cover_x_pos = 0
         # Set up display
         screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Dodge the Obstacles")
@@ -644,6 +682,8 @@ class Game:
         ORANGE = (255,165,0)
         YELLOW = (255,255,0)
         BLUE = (8,221,253)
+        ALMOST_BLACK = (20,20,20)
+        colour_change = 255
         if colour == "Red":
             past_self = colour
             colour = RED
@@ -701,18 +741,24 @@ class Game:
         POINTS_TIMER_EVENT = pygame.USEREVENT + 2
 
         score = 0
-
-        cloud_random_number = random.randint(0,2)
-        if cloud_random_number == 0:
-            cloud = pygame.image.load("clouds1.png")
-        elif cloud_random_number == 1:
-            cloud = pygame.image.load("clouds2.png")
-        elif cloud_random_number == 2:
-            cloud = pygame.image.load("clouds3.png")
-        # Load tree image and grass
+        moving_clouds_num1 = -200
+        moving_clouds_num2 = -200
+        moving_clouds_num3 = -200
+        moving_clouds_num4 = -200
+        moving_clouds_num5 = -200
+        cloud_random_number = random.randint(3,4)
+        cloud = pygame.image.load("cloud1.png")
+        #if cloud_random_number == 0:
+        #    cloud = pygame.image.load("clouds1.png")
+        #elif cloud_random_number == 1:
+        #    cloud = pygame.image.load("clouds2.png")
+        #elif cloud_random_number == 2:
+        #    cloud = pygame.image.load("clouds3.png")
+        # Load tree image and grass face and hat image and also get a ranodm number 
         tree_image = pygame.image.load("tree.png")
         num = random.randint(100,400)
         face = pygame.image.load("face.png")
+        hat = pygame.image.load("hat.png")
         grass = pygame.image.load("grass.png")
         #load coin image
         coin = pygame.image.load("coin.png")
@@ -820,32 +866,91 @@ class Game:
                     elif slot2 == 2:
                         slot2 = 0
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT] and player_x > 0:
+            if keys[pygame.K_LEFT] and player_x > 0 and keys[pygame.K_a] != True:
                 player_x -= 17/2
-            if keys[pygame.K_RIGHT] and player_x < 750:
+            if keys[pygame.K_RIGHT] and player_x < 750 and keys[pygame.K_d] != True:
                 player_x += 17/2
             if keys[pygame.K_a] and player_x > 0:
                 player_x -= 17/2
             if keys[pygame.K_d] and player_x < 750:
                 player_x += 17/2
             
-            screen.fill(WHITE)
-            pygame.draw.circle(screen,YELLOW,(10,10),80)
-            # Draw background trees and clouds and grass
+            colour_change_colour = (colour_change,colour_change,colour_change)
+            if sun_x_pos >=700 :
+                screen.fill(colour_change_colour)
+                if colour_change>20:
+                    colour_change-=1.5
+            else:
+                screen.fill(WHITE)
+            if sun_x_pos <=700:
+                pygame.draw.circle(screen,YELLOW,(sun_x_pos,10),80)
+                sun_x_pos+=0.65
+            elif sun_x_pos <=900 and sun_x_pos>700:
+                pygame.draw.circle(screen,YELLOW,(sun_x_pos,10),80)
+                sun_x_pos+=0.65
+            else:
+                if moon_x_pos> 699:
+                    pygame.draw.circle(screen,WHITE,(700,90),80)  
+                    pygame.draw.circle(screen,colour_change_colour,(670,80),70)
+                else:
+                    pygame.draw.circle(screen,WHITE,(moon_x_pos,90),80)  
+                    pygame.draw.circle(screen,colour_change_colour,(moon_cover_x_pos,80),70)
+                    moon_x_pos+=1
+                    moon_cover_x_pos+=1
+            
+                 
+                # Draw background trees and clouds and grass
             for i in range(0, 800, num):
                 screen.blit(tree_image, (i, 500))
             
-            if cloud_random_number == 0:    
-                screen.blit(cloud,(0,-150))
-            elif cloud_random_number == 1:    
-                screen.blit(cloud,(50,-80))
-            elif cloud_random_number == 2:    
-                screen.blit(cloud,(-150,-150))
-            
+            if cloud_random_number == 3:    
+                
+                screen.blit(cloud,(cloud_x_num_1+moving_clouds_num1,cloud_y_num_1))
+                screen.blit(cloud,(cloud_x_num_2+moving_clouds_num2,cloud_y_num_2))
+                screen.blit(cloud,(cloud_x_num_3+moving_clouds_num3,cloud_y_num_3))
+            #    screen.blit(cloud,(0,-150))
+            elif cloud_random_number == 4:    
+                
+                screen.blit(cloud,(cloud_x_num_1+moving_clouds_num1,cloud_y_num_1))
+                screen.blit(cloud,(cloud_x_num_2+moving_clouds_num2,cloud_y_num_2))
+                screen.blit(cloud,(cloud_x_num_3+moving_clouds_num3,cloud_y_num_3))
+                screen.blit(cloud,(cloud_x_num_4+moving_clouds_num4,cloud_y_num_4))             
+            #    screen.blit(cloud,(50,-80))
+           
+            #   screen.blit(cloud,(-150,-150))
+            if cloud_x_num_1+moving_clouds_num1 >= 820:
+                moving_clouds_num1 =-400
+             
+                cloud_x_num_1 = 0
+                cloud_y_num_1  =random.randint(30,350)
+            if cloud_x_num_2+moving_clouds_num2 >= 820:
+                moving_clouds_num2 =-400
+               
+                cloud_x_num_2 = 0
+                cloud_y_num_2  =random.randint(30,350)
+            if cloud_x_num_3+moving_clouds_num3 >= 820:
+                moving_clouds_num3 =-400
+           
+                cloud_x_num_3 = 0
+                cloud_y_num_3  =random.randint(30,350)
+            if cloud_x_num_4+moving_clouds_num4 >= 820:
+                moving_clouds_num4 =-400
+             
+                cloud_x_num_4 = 0
+                cloud_y_num_4  =random.randint(30,350)
+        
+                    
+                
+                
+                
             for i in range(0,800,grass_has_been_drawn):
                 screen.blit(grass,(i,539))
-                
-                
+            
+            moving_clouds_num1 +=1.3
+            moving_clouds_num2 +=1.7
+            moving_clouds_num3 +=1.2
+            moving_clouds_num4 +=1.5
+            
             
             # Draw grass
             pygame.draw.rect(screen, GREEN, (0, 550, 800, 10))
@@ -858,6 +963,7 @@ class Game:
             if player_alive == True:
                 pygame.draw.rect(screen, colour, (player_x, player_y, player_width, player_height))
                 screen.blit(face,(player_x-6,player_y))
+                screen.blit(hat,(player_x+7.5,player_y-15))
             
             # Draw obstacle
                 pygame.draw.rect(screen, RED, (obstacle_x, obstacle_y, obstacle_width, obstacle_height))
@@ -882,10 +988,10 @@ class Game:
                     
                     
                     placed = True
-            if placed  == True:
+            if placed  == True and player_alive == True:
                 
                 screen.blit(coin,(coin_x,coin_y))
-                if player_x < coin_x+ coin_radius and player_x +player_width> coin_x and player_alive == True:
+                if player_x < coin_x+ coin_radius+15 and player_x +player_width> coin_x and player_alive == True:
                     placed = False
                     
                     
@@ -900,10 +1006,10 @@ class Game:
                     
                     placed2 = True
             
-            if placed2  == True :
+            if placed2  == True and player_alive == True:
                 
                 screen.blit(coin_boost_png,(coin_x2,coin_y))
-                if player_x < coin_x2+ coin_radius+5 and player_x +player_width> coin_x2 and player_alive == True:
+                if player_x < coin_x2+ coin_radius+30 and player_x +player_width> coin_x2 and player_alive == True:
                     placed2 = False
                     coin_boost = 2
                     timer_true = True
@@ -939,7 +1045,7 @@ class Game:
             if placed3  == True and player_alive == True:
                 
                 screen.blit(points_boost_png,(coin_x3,coin_y))
-                if player_x < coin_x3+ coin_radius+5 and player_x +player_width> coin_x3 and player_alive == True:
+                if player_x < coin_x3+ coin_radius+23 and player_x +player_width> coin_x3 and player_alive == True:
                     placed3 = False
                     points_boost = 2
                     timer_True_points = True
@@ -970,18 +1076,26 @@ class Game:
                 
                 if score >int(highscore):
                     end_surface3 = font.render("You have a new highscore! Congratulations!!!", True, BLACK)
+                    if colour_change <80:
+                        end_surface3 = font.render("You have a new highscore! Congratulations!!!", True, WHITE)
                     screen.blit(end_surface3, (140, 290))
                 
                     
                 elif score < int(highscore):
                     end_surface2 = font.render(f"Try to beat your highscore of {highscore}", True, BLACK)
+                    if colour_change <80:
+                        end_surface2 = font.render(f"Try to beat your highscore of {highscore}", True, WHITE)
                     screen.blit(end_surface2, (230, 290))
                 elif score == int(highscore):
                     end_surface2 = font.render(f"You tied the highscore of {highscore}. Don't Give Up!!!", True, BLACK)
+                    if colour_change <80:
+                        end_surface2 = font.render(f"You tied the highscore of {highscore}. Don't Give Up!!!", True, WHITE)
                     screen.blit(end_surface2, (140, 290))
                 
                     
                 end_surface = font.render(f"You Died! Your score was {score}", True, BLACK)
+                if colour_change <80:
+                    end_surface = font.render(f"You Died! Your score was {score}", True, WHITE)
                 screen.blit(end_surface, (240, 240))
                 
                 self.draw_button(screen, 350, 400, 100, 50, "Return")
@@ -993,14 +1107,18 @@ class Game:
                     
             
             # Display score
+            
             score_surface = font.render("Score: " + str(score), True, BLACK)
             coin_surface = font.render("Coins: " + str(coin_score),True,BLACK)
+            if colour_change <80:
+                score_surface = font.render("Score: " + str(score), True, WHITE)
+                coin_surface = font.render("Coins: " + str(coin_score),True,WHITE)
             screen.blit(score_surface, (10, 10))
             screen.blit(coin_surface,(10, 50))
             
             pygame.display.flip()
             slowmowmulti = 1
-            clock.tick(60*slowmowmulti)#tickrate for game
+            clock.tick(60*slowmowmulti)
         
         pygame.quit()
         
